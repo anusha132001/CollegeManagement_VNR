@@ -1,0 +1,57 @@
+﻿@model CollegeManagement_VNR.Models.LatestUpdate
+@using (Html.BeginForm("Update", "LatestUpdates", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="form-horizontal">
+        <br />
+        <h4 style="color: #28104E;">Enter Your Updates</h4>
+        <div>@Html.ValidationSummary(true, "", new { @class = "text-danger" })</div>
+
+
+        <div class="container">
+            <div class="form-group">
+                <div class="flex-container">
+                    <div class="textarea-container">
+
+                        @Html.TextAreaFor(model => model.Information, new { style = "width:800px; height:100px", @class = "form-control", placeholder = "Enter your information here..." })
+                        @Html.ValidationMessageFor(model => model.Information, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="button-container" style="margin-top:10px;">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (User.IsInRole("Teacher"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Createdby, htmlAttributes: new { style = "display: none;" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Createdby, new { htmlAttributes = new { style = "display: none;", Value = @Session["TeacherId"] } })
+                </div>
+            </div>
+        }
+        else if (User.IsInRole("Student"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Createdby, htmlAttributes: new { style = "display: none;" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Createdby, new { htmlAttributes = new { style = "display: none;", Value = @Session["StudentId"] } })
+                </div>
+            </div>
+        }
+        else if (User.IsInRole("Admin"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Createdby, htmlAttributes: new { style = "display: none;" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Createdby, new { htmlAttributes = new { style = "display: none;", Value = 13 } })
+                </div>
+            </div>
+        }
+    </div>
+}
+
+
+
+
+

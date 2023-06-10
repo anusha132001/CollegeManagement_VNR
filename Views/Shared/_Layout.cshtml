@@ -1,0 +1,269 @@
+﻿@using CollegeManagement_VNR.Models
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<style>
+    /*.horizontal-list {
+            display: flex;
+            list-style: none;
+        }
+
+            .horizontal-list li {
+                margin-right: 10px;
+            }*/
+    /*body {
+            overflow-y: hidden;
+        }*/
+    .graduation-icon {
+        color: navajowhite; /* Set the color of the icon */
+        font-size: 24px; /* Set the size of the icon */
+    }
+
+
+    .navbar {
+        min-height: 32px !important;
+    }
+
+    .navbar .navbar-nav {
+        list-style-type: none;
+        float: none;
+    }
+
+        .navbar .navbar-nav li a {
+            color: white;
+        }
+
+    .navbar {
+        background-color: #03a9f4;
+        text-align: center;
+        padding-top: 5px;
+        box-shadow: 20px 20px 20px #cbced1, -13px -13px 20px #fff;
+    }
+
+    .navbar {
+        font-family: "Times New Roman", Times, serif;
+        font-size: 20px;
+        border: 0;
+    }
+
+    li.right {
+        float: right;
+    }
+
+    li.left {
+        display: inline-block;
+    }
+</style>
+<body>
+
+    @* <nav class="navbar navbar-default" style="background-color:darkblue">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a style="font-size:30px;margin-top:18px;" class="navbar-brand" href="#">VNR </a>
+                </div>
+                <ul class="nav navbar-nav">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        string TeacherName1 = "";
+                        string StudentName1 = "";
+                        if (User.IsInRole("Admin"))
+                        {
+                            <li style="margin-left:50px;color:whitesmoke">@Html.ActionLink("Teacher", "RegisterTeacher", "TeachersDetails")</li>
+                            <li style="margin-left: 50px"><a href="/Students/RegisterStudent">Student</a></li>
+                            <li style="margin-left: 50px"><a href="#">Time-Table</a>
+                             </li><li style="margin-left: 50px;margin-right:100px;"><a href="/LatestUpdates/Update">Latest Update</a></li>
+                            <li style="margin-left: 200px;margin-top:40px"> <b>Admin</b></li>
+                            Session["Admin"] = "Admin";
+                        }
+                        else if (User.IsInRole("Teacher"))
+                        {
+                            using (var context = new DbClgEntities())
+                            {
+                                var id = (from usertable in context.Users
+                                          where usertable.Username == @User.Identity.Name
+                                          select usertable.Id);
+                                int id2 = id.FirstOrDefault();
+                                Session["TeacherId"] = id2;
+                                //Teacher welcome name
+                                var TeacherName = (from usertable in context.Teachers
+                                                   where usertable.User_Id == id2
+                                                   select usertable.Name);
+                                TeacherName1 = TeacherName.FirstOrDefault();
+                                Session["Teacher"] = "Teacher";
+
+
+
+
+
+                                <li style="margin-left: 50px"><a href="/Students/RegisterStudent">Student</a></li>
+                                <li style="margin-left: 50px"><a href="#">Time-Table</a></li>
+                                <li style="margin-left: 50px"><a href="/LatestUpdates/Update">Latest Update</a></li>
+                                <li style="margin-left: 200px;margin-top:40px">  @TeacherName1 </li>
+                            }
+
+                        }
+                        else if (User.IsInRole("Student"))
+                        {
+
+                            using (var context = new DbClgEntities())
+                            {
+                                var id = (from usertable in context.Users
+                                          where usertable.Username == @User.Identity.Name
+                                          select usertable.Id);
+                                int id2 = id.FirstOrDefault();
+                                Session["StudentId"] = id2;
+                                var StudentName = (from usertable in context.Students
+                                                   where usertable.User_Id == id2
+                                                   select usertable.Name);
+                                StudentName1 = StudentName.FirstOrDefault();
+                                Session["Student"] = "Student";
+
+                                <li style="margin-left: 50px"><a href="#">Time-Table</a></li>
+                                <li style="margin-left: 50px"><a href="/LatestUpdates/Update">Latest Update</a></li>
+                                <li style="margin-left: 200px;margin-top:40px">  @StudentName1</li>
+                            }
+                        }
+
+                        <li style="padding-left: 30px; margin-top: 35px; color: #777779">
+                            <button class="btn"><a href="/Home/Logout"><b>Logout</b></a></button>
+                        </li>
+
+                    }
+                    else
+                    {
+                        <li style="padding-left: 1030px; margin-top: 25px; color: #777779">
+                            <button class="btn"><a href="/Home/Login"><b>Login</b></a></button>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <br />
+        </nav>*@
+
+
+
+    @*new navbar*@
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+
+            <ul class="nav navbar-nav">
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a href="/Home/home"><span style="color:navajowhite;" class="fa fa-graduation-cap"></span>VNR</a></li>
+                    if (User.IsInRole("Admin"))
+                    {
+                        <li><a href="/TeachersDetails/RegisterTeacher">Teacher</a></li>
+                        <li><a href="/Students/RegisterStudent">Student</a></li>
+                        <li><a href="/LatestUpdates/Update">Latest Update</a></li>
+                        <li><a href="/TimeTable/Index">Time Table</a></li>
+                        <li class="dropdown right">
+                            <a style="background-color: #03a9f4" class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa-solid fa-user"></i><span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a style="color:black;font-weight:bolder;font-size:18px;" href="#">Admin</a></li>
+                                <li><a style="color:black" href="/Home/Logout">Logout</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else if (User.IsInRole("Teacher"))
+                    {
+                        using (var context = new DbClgEntities())
+                        {
+
+                            var id = (from usertable in context.Users
+                                      where usertable.Username == @User.Identity.Name
+                                      select usertable.Id);
+                            int id2 = id.FirstOrDefault();
+                            Session["TeacherId"] = id2;
+                            //Teacher welcome name
+                            var TeacherName = (from usertable in context.Teachers
+                                               where usertable.User_Id == id2
+                                               select usertable.Name);
+                            string TeacherName1 = TeacherName.FirstOrDefault();
+                            Session["Teacher"] = "Teacher";
+                            <li><a href="/Students/RegisterStudent">Student</a></li>
+                            <li><a href="/LatestUpdates/Update">Latest Update</a></li>
+                            <li><a href="/TimeTable/Index">Time Table</a></li>
+                            <li class="dropdown right">
+                                <a style="background-color: #03a9f4" class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa-solid fa-user"></i><span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a style="color:black;font-weight:bolder;font-size:18px;" href="#">@TeacherName1</a></li>
+                                    <li><a style="color:black" href="/Home/Logout">Logout</a></li>
+                                </ul>
+                            </li>
+                        }
+                    }
+                    else if (User.IsInRole("Student"))
+                    {
+                        using (var context = new DbClgEntities())
+                        {
+                            var id = (from usertable in context.Users
+                                      where usertable.Username == @User.Identity.Name
+                                      select usertable.Id);
+                            int id2 = id.FirstOrDefault();
+                            Session["StudentId"] = id2;
+                            var StudentName = (from usertable in context.Students
+                                               where usertable.User_Id == id2
+                                               select usertable.Name);
+                            string StudentName1 = StudentName.FirstOrDefault();
+                            Session["Student"] = "Student";
+                            <li><a href="/LatestUpdates/Update">Latest Update</a></li>
+                            <li><a href="/TimeTable/Index">Time Table</a></li>
+                            <li class="dropdown right">
+                                <a style="background-color: #03a9f4" class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa-solid fa-user"></i><span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a style="color:black;font-weight:bolder;font-size:18px;" href="#">@StudentName1</a></li>
+                                    <li><a style="color:black" href="/Home/Logout">Logout</a></li>
+                                </ul>
+                            </li>
+                        }
+                    }
+                }
+                else
+                {
+                    <li class="left" style="font-size: 28px; font-family: 'Times New Roman', Times, serif;"><a href="#" style="color:white;">VNR Institute Of Management</a></li>
+                    <!--<li>
+                    <ul class="horizontal-list">
+                        <li class="left" style="font-size:35px; color:whitesmoke;"><a href="#">VNR Institute Of Management</a></li>-->
+                    @*                                    <li><a href="/Home/Login">Login</a></li>
+                    *@
+                    <!--</ul>
+                    </li>-->
+                }
+
+
+            </ul>
+        </div>
+
+    </nav>
+
+
+
+
+    <div class="container">
+
+        @RenderBody()
+
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
+
+

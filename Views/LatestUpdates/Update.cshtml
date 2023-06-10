@@ -1,0 +1,34 @@
+﻿@model IEnumerable<CollegeManagement_VNR.ViewModels.LatestUpdateVM>
+
+<div>
+    @Html.Partial("_Create", new CollegeManagement_VNR.Models.LatestUpdate())
+
+</div>
+<br />
+<div class="updates">
+    <h4 style="color: #28104E;">Latest Updates</h4>
+
+
+
+
+    @foreach (var item in Model)
+    {
+        DateTime updatedDate = Convert.ToDateTime(item.Created_Date);
+
+        if (updatedDate.Date == DateTime.Today)
+
+        {
+
+
+            <div class="alert alert-info">
+                <strong>@Html.DisplayFor(a => item.Information)&nbsp;&nbsp;---&nbsp;&nbsp;</strong> @Html.DisplayFor(a => item.Name)
+            </div>
+        }
+
+    }
+
+    </tbody>
+    </table>
+</div>
+
+
